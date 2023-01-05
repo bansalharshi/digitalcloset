@@ -157,11 +157,11 @@ def register():
 
 
 
-# @app.route("/additem", methods=["GET", "POST"])
-# # @login_required
-# def additem():
+@app.route("/additem", methods=["GET", "POST"])
+# @login_required
+def additem():
 
-#     return render_template("additem.html")
+    return render_template("additem.html")
 
 # @app.route("/")
 # # @login_required
