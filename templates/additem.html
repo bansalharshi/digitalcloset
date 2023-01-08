@@ -7,7 +7,13 @@
 {% block main %}
     <form action="/additem" method="post">
         <input  autocomplete="off" autofocus class="form-control mx-auto w-auto" id="symbol" name="symbol" placeholder="Weblink" type="text">
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-primary" type="submit">Add to closet</button>
+        <h3>--OR--<br>Enter Details Manually</h3>
+        <input  autocomplete="off" class="form-control mx-auto w-auto" id="name" name="name" placeholder="Name" type="text">
+        <input  autocomplete="off" class="form-control mx-auto w-auto" id="imagelink" name="imagelink" placeholder="imagelink" type="text">
+        <input  autocomplete="off" class="form-control mx-auto w-auto" id="purchase_price" name="purchase_price" placeholder="purchase_price" type="text">
+        <input  autocomplete="off" class="form-control mx-auto w-auto" id="type" name="type" placeholder="type" type="text">
+        <input  autocomplete="off" class="form-control mx-auto w-auto" id="weblink" name="weblink" placeholder="weblink" weblink="text">
+        <button class="btn btn-primary" type="submit">Add to closet</button>
     </form>
-
 {% endblock %}
