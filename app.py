@@ -52,8 +52,10 @@ def clothes():
     all_clothes = db.execute(
         "SELECT name, notes, brand, weblink, case when imagelink = '' then '../static/default_image.jpg' else imagelink end as imagelink from items WHERE type = 'Clothes' AND user_id = ?", session["user_id"])
 
-    # return render_template("history.html", all_items=all_items)
-    return render_template("clothes.html", all_clothes = all_clothes)
+    if len(all_clothes)==0:
+        return render_template("no_clothes.html")
+    else:
+        return render_template("clothes.html", all_clothes = all_clothes)
 
 
 @app.route("/shoes", methods=["GET"])
@@ -63,7 +65,7 @@ def shoes():
     all_shoes = db.execute(
         "SELECT name, notes, brand, weblink, case when imagelink = '' then '../static/default_image.jpg' else imagelink end as imagelink from items WHERE type = 'Shoes' AND user_id = ?", session["user_id"])
 
-    # return render_template("history.html", all_items=all_items)
+
     if len(all_shoes)==0:
         return render_template("no_shoes.html")
     else:
@@ -74,9 +76,9 @@ def shoes():
 def accessories():
     # print("bobo")
     all_accessories = db.execute(
-        "SELECT name, notes, brand, weblink, case when imagelink = '' then '../static/default_image.jpg' else imagelink end as imagelink from items WHERE type = 'accessories' AND user_id = ?", session["user_id"])
+        "SELECT name, notes, brand, weblink, case when imagelink = '' then '../static/default_image.jpg' else imagelink end as imagelink from items WHERE type = 'Accessories' AND user_id = ?", session["user_id"])
 
-    # return render_template("history.html", all_items=all_items)
+
     if len(all_accessories)==0:
         return render_template("no_accessories.html")
     else:
