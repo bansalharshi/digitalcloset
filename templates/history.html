@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <div class="section">
+        <table class = "table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for itemprice in itemprices %}
+                    <tr>
+                        <td>{{itemprice.purchase_date}}</td>
+                        <td><a href="{{itemprice.weblink}}" class="btn btn-primary">{{itemprice.name}}</a></td>
+                        <td>{{itemprice.brand if itemprice.brand is not none else ''}}</td>
+                        <td>{{itemprice.type if itemprice.type is not none else ''}}</td>
+                        <td>{{itemprice.purchase_price}}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><b>TOTAL</b></td>
+                    <td><b>{{total_price}}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

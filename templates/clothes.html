@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Clothes
+{% endblock %}
+
+{% block main %}
+
+    <div class="row">
+    {% for clothes in all_clothes %}
+    <div class="col-sm-2">
+        <!-- <div class="w-50 p-3" style="background-color: #eee;"> -->
+        <!-- </div> -->
+        <div class="card">
+            <img src= "{{clothes.imagelink}}" class="card-img-top" alt="You are pretty">
+            <div class="card-body">
+              <a href="{{clothes.weblink}}" class="btn btn-primary" target="_blank">{{clothes.name}}</a>
+              <p class="card-text">{{clothes.brand if clothes.brand is not none else ''}}</p>
+              <p class="card-text">{{clothes.notes if clothes.notes is not none else ''}}</p>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

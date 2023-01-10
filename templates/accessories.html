@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Accessories
+{% endblock %}
+
+{% block main %}
+
+    <div class="row">
+    {% for accessories in all_accessories %}
+    <div class="col-sm-2">
+        <!-- <div class="w-50 p-3" style="background-color: #eee;"> -->
+        <!-- </div> -->
+        <div class="card">
+            <img src= "{{accessories.imagelink}}" class="card-img-top" alt="You are pretty">
+            <div class="card-body">
+              <a href="{{accessories.weblink}}" class="btn btn-primary" target="_blank">{{accessories.name}}</a>
+              <p class="card-text">{{accessories.brand if accessories.brand is not none else ''}}</p>
+              <p class="card-text">{{accessories.notes if accessories.notes is not none else ''}}</p>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

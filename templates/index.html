@@ -5,6 +5,60 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Hello, World!</h1>
+
+    <div class="row">
+    {% for item in all_items %}
+    <div class="col-sm-2">
+        <!-- <div class="w-50 p-3" style="background-color: #eee;"> -->
+        <!-- </div> -->
+        <div class="card">
+          <img src= "{{item.imagelink}}" class="card-img-top" alt="You are pretty">
+          <div class="card-body">
+            <a href="{{item.weblink}}" class="btn btn-primary" target="_blank">{{item.name}}</a>
+            <p class="card-text">{{item.brand if item.brand is not none else ''}}</p>
+            <p class="card-text">{{item.notes if item.notes is not none else ''}}</p>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
 
 {% endblock %}
+    <!-- {% for item in all_items %}
+
+
+    {% endfor %} -->
+
+    <!-- <div class="card" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <img src="https://i.s-madewell.com/is/image/madewell/NG342_DM6212_m?wid=1080&hei=1372&fmt=jpeg&fit=crop&qlt=75,1&resMode=bisharp&op_usm=0.5,1,5,0" class="card-img-top" alt="You are pretty">
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+    </div> -->
+
+    
+
