@@ -6,7 +6,7 @@ from flask_session import Session
 # import sqlite3
 from cs50 import SQL
 
-from helpers import apology, login_required
+from helpers import apology, login_required, usd
 
 # using datetime module to get current date and time
 from datetime import datetime
@@ -37,8 +37,84 @@ def after_request(response):
 @app.route("/")
 # @login_required
 def index():
-    print("bobo")
-    return render_template("index.html")
+    # print("bobo")
+    all_items = db.execute(
+        "SELECT name, notes, brand, weblink, case when imagelink = '' then '../static/default_image.jpg' else imagelink end as imagelink from items WHERE user_id = ?", session["user_id"])
+
+    # return render_template("history.html", all_items=all_items)
+    return render_template("index.html", all_items=all_items)
+
+
+@app.route("/clothes", methods=["GET"])
+# @login_required
+def clothes():
+    # print("bobo")
+    all_clothes = db.execute(
+        "SELECT name, notes, brand, weblink, case when imagelink = '' then '../static/default_image.jpg' else imagelink end as imagelink from items WHERE type = 'Clothes' AND user_id = ?", session["user_id"])
+
+    # return render_template("history.html", all_items=all_items)
+    return render_template("clothes.html", all_clothes = all_clothes)
+
+
+@app.route("/shoes", methods=["GET"])
+# @login_required
+def shoes():
+    # print("bobo")
+    all_shoes = db.execute(
+        "SELECT name, notes, brand, weblink, case when imagelink = '' then '../static/default_image.jpg' else imagelink end as imagelink from items WHERE type = 'Shoes' AND user_id = ?", session["user_id"])
+
+    # return render_template("history.html", all_items=all_items)
+    if len(all_shoes)==0:
+        return render_template("no_shoes.html")
+    else:
+        return render_template("shoes.html", all_shoes = all_shoes)
+
+@app.route("/accessories", methods=["GET"])
+# @login_required
+def accessories():
+    # print("bobo")
+    all_accessories = db.execute(
+        "SELECT name, notes, brand, weblink, case when imagelink = '' then '../static/default_image.jpg' else imagelink end as imagelink from items WHERE type = 'accessories' AND user_id = ?", session["user_id"])
+
+    # return render_template("history.html", all_items=all_items)
+    if len(all_accessories)==0:
+        return render_template("no_accessories.html")
+    else:
+        return render_template("accessories.html", all_accessories = all_accessories)
+
+
+
+@app.route("/history", methods=["GET"])
+# @login_required
+def history():
+    itemprices = db.execute(
+        "SELECT name, purchase_date, weblink, case when purchase_price = '' then 0 else purchase_price end as purchase_price, brand, type from items WHERE user_id = ?", session["user_id"])
+                # "SELECT name, purchase_date, weblink, purchase_price, brand, type from items WHERE user_id = ?", session["user_id"])
+    
+    print(itemprices)
+
+    # print(itemprices["purchase_price"])
+
+    # print(type(itemprices["purchase_price"]))
+
+    total_price = sum(itemprice["purchase_price"] for itemprice in itemprices)
+
+    for itemprice in itemprices:
+        if itemprice["purchase_price"] == 0:
+            itemprice["purchase_price"] = "Price not recorded"
+        else:
+            itemprice["purchase_price"] = usd(itemprice["purchase_price"])
+
+    if total_price == 0:
+        total_price = "No price recorded"
+    else:
+        total_price = usd(total_price)
+
+    # print(total_price)
+
+    return render_template("history.html", itemprices=itemprices, total_price = total_price)    
+
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -160,8 +236,37 @@ def register():
 @app.route("/additem", methods=["GET", "POST"])
 # @login_required
 def additem():
+    type_list = ["Clothes", "Shoes", "Accessories"]
 
-    return render_template("additem.html")
+    # print(type_list)
+    # print(type(type_list))
+
+    """If user submits an item"""
+    if request.method == "POST":
+        name = request.form.get("name")
+        brand = request.form.get("brand")
+        imagelink = request.form.get("imagelink")
+        purchase_price = request.form.get("purchase_price")
+        type = request.form.get("type")
+        weblink = request.form.get("weblink")
+        notes = request.form.get("notes")
+
+        # cdt = datetime.now()
+        # cd = cdt.date()
+        # ct = cdt.strftime("%H:%M:%S")
+        print("data loaded")
+
+        db.execute("INSERT INTO items (user_id, name, imagelink, purchase_price, type, weblink, notes, brand, purchase_date, purchase_time) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", session["user_id"], name, imagelink, purchase_price, type, weblink, notes, brand, datetime.now().date(), datetime.now().strftime("%H:%M:%S"))
+
+        print("data inserted")
+        #check if we should keep of drop the column logging date
+        #check if the purchase date anf purchase time should be remaned to logging date and logging time
+        # return redirect("/")
+        return render_template("additem.html", type_list = type_list)
+
+    else:
+
+        return render_template("additem.html", type_list = type_list)
 
 # @app.route("/")
 # # @login_required
