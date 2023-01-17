@@ -244,7 +244,7 @@ def register():
 @app.route("/additem", methods=["GET", "POST"])
 @login_required
 def additem():
-    type_list = ["Clothes", "Shoes", "Accessories"]
+    # type_list = ["Clothes", "Shoes", "Accessories"]
 
     # print(type_list)
     # print(type(type_list))
@@ -270,11 +270,12 @@ def additem():
         #check if we should keep of drop the column logging date
         #check if the purchase date anf purchase time should be remaned to logging date and logging time
         # return redirect("/")
-        return render_template("additem.html", type_list = type_list)
+        # return render_template("additem.html", type_list = type_list)
+        return render_template("additem.html")
 
     else:
 
-        return render_template("additem.html", type_list = type_list)
+        return render_template("additem.html")
 
 
 
