@@ -37,8 +37,7 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    print("bobo")
-    print(session)
+    # print(session)
     #print(session["user_id"])
     all_items = db.execute(
         "SELECT name, notes, brand, weblink, case when imagelink = '' then '../static/default_image.jpg' else imagelink end as imagelink from items WHERE user_id = ?", session["user_id"])
@@ -46,13 +45,9 @@ def index():
     if len(all_items)==0:
         return render_template("no_items.html")
     else:
-        # return render_template("history.html", all_items=all_items)
         return render_template("index.html", all_items=all_items)
-        # return render_template("shoes.html", all_shoes = all_shoes)
 
     
-
-
 @app.route("/clothes", methods=["GET"])
 @login_required
 def clothes():
